@@ -31,13 +31,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 解析token，若解析失败，也返回未登录信息
+        // 解析token，若解析失败，返回token错误信息
         try {
             JwtUtils.parseJwt(jwt);
         } catch (Exception e) {
             e.printStackTrace();
             log.info("token令牌解析失败");
-            Result<String> error = Result.error("NOT_LOGIN");
+            Result<String> error = Result.error("TOKEN_ERROR");
             String notLogin = JSONObject.toJSONString(error);
             response.getWriter().write(notLogin);
             return false;
